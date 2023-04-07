@@ -1,5 +1,5 @@
 {
-  "name": "pi202310-tnb-shoppingcart",
+  "name": "pi202310-tnb-admin-products",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kevs256/PI202310-TNB-shoppingcart.git"
+    "url": "git+https://github.com/Kevs256/PI202310-TNB-admin-products.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Kevs256/PI202310-TNB-shoppingcart/issues"
+    "url": "https://github.com/Kevs256/PI202310-TNB-admin-products/issues"
   },
-  "homepage": "https://github.com/Kevs256/PI202310-TNB-shoppingcart#readme",
+  "homepage": "https://github.com/Kevs256/PI202310-TNB-admin-products#readme",
   "dependencies": {
     "@types/cors": "^2.8.13",
     "cors": "^2.8.5",
