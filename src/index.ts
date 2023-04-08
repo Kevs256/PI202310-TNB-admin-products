@@ -1,8 +1,12 @@
 import dotenv from 'dotenv';
+
+dotenv.config();
+
+
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-//import reportsRouter from './router/reports.router.js';
+import productRouter from './router/products.router.js';
 
 class Server{
 
@@ -16,7 +20,6 @@ class Server{
     }
 
     private config(){
-        dotenv.config();
         this.app.use(cors({
             origin: process.env.CLIENT_HOST! || '*',
             credentials: true
@@ -26,7 +29,7 @@ class Server{
     }
 
     private routes(){
-        //this.app.use(cardsRouter.router);
+        this.app.use(productRouter.router);
 
     }
 
