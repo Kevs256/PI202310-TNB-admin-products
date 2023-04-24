@@ -1,9 +1,10 @@
 export default interface IProducts{
-    id_producto?: string,
-    id_carta: string,
-    precio: number,
-    descuento: number,
-    disponibilidad: number,
-    cantidad: number,
-    valoracion_general: number,
+    id_product?: string,
+    type_object:string,
+    id_object: string,
+    price: number,
+    discount: number,
+    availability: number,
+    amount: number,
+    overall_rating?: number,
 }

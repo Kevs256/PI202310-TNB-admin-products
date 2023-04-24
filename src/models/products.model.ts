@@ -7,17 +7,18 @@ type ProductsModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): ProductsInstance;
 };
 
-export default db.define('Producto', {
-    id_producto: {
+export default db.define('Product', {
+    id_product: {
       primaryKey: true,
       autoIncrement: true,
       type: DataTypes.STRING},
-    id_carta: DataTypes.STRING,
-    precio: DataTypes.NUMBER,
-    descuento: DataTypes.NUMBER,
-    disponibilidad: DataTypes.NUMBER,
-    cantidad: DataTypes.NUMBER,
-    valoracion_general: DataTypes.NUMBER,
+    type_object:DataTypes.STRING,
+    id_object: DataTypes.STRING,
+    price: DataTypes.NUMBER,
+    discount: DataTypes.NUMBER,
+    availability: DataTypes.NUMBER,
+    amount: DataTypes.NUMBER,
+    overall_rating: DataTypes.NUMBER,
 }, {
     freezeTableName: true,
     timestamps: false
