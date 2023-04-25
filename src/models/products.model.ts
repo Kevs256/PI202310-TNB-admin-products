@@ -10,15 +10,15 @@ type ProductsModelStatic = typeof Model & {
 export default db.define('Product', {
     id_product: {
       primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.STRING},
-    type_object:DataTypes.STRING,
-    id_object: DataTypes.STRING,
+      type: DataTypes.STRING
+    },
+    type:DataTypes.STRING,
     price: DataTypes.NUMBER,
     discount: DataTypes.NUMBER,
     availability: DataTypes.NUMBER,
     amount: DataTypes.NUMBER,
     overall_rating: DataTypes.NUMBER,
+    amount_people_rate: DataTypes.NUMBER
 }, {
     freezeTableName: true,
     timestamps: false
