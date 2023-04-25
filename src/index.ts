@@ -30,7 +30,7 @@ class Server{
     }
 
     private routes(){
-        this.app.use(productRouter.router);
+        this.app.use('/products', productRouter.router);
 
     }
 

@@ -2,7 +2,7 @@ import Express, { Request, Response, NextFunction }  from "express";
 import productsModel from "../models/products.model";
 import { where } from "sequelize";
 
-const getProductByIDType = async (req: Request, res: Response, next: NextFunction) => {
+const getProductById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id_product } = req.params;
         const producto = await productsModel.findByPk(id_product);
@@ -17,10 +17,27 @@ const getProductByIDType = async (req: Request, res: Response, next: NextFunctio
     }
 }
 
+const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const { id_card, price, discount, availability, amount, type } = req.body;
+        
+        const newProduct = await productsModel.create({
+            id_product: id_card,
+            price, discount, availability, 
+            amount, type, overall_rating: 0, amount_people_rate: 0
+        });
+
+        return res.status(200).json({ success: true, data: newProduct });
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({ success: false, error: 'Server error' });
+    }
+}
+
 const editProduct = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const { id_product } = req.params;
-        const { price, discount, availability, amount, type } = req.body;
+        const { price, discount, availability, amount } = req.body;
         
         const product = await productsModel.findByPk(id_product);
         if (product) {
@@ -29,13 +46,9 @@ const editProduct = async (req: Request, res: Response, next: NextFunction) => {
             product.availability = availability || product.availability;
             product.amount = amount || product.amount;
             await product.save();
-            return res.status(201).json({ success: true, data: product });
+            return res.status(200).json({ success: true, data: product });
         }else{
-            const newProduct = await productsModel.create({
-                price, discount, availability, 
-                amount, type, overall_rating: 0, amount_people_rate: 0
-            });
-            return res.status(201).json({ success: true, data: newProduct });
+            return res.status(404).json({ success: true, error: "product not found" });
         }
     }catch(err){
         console.error(err);
@@ -76,8 +89,9 @@ const editProductRating = async (req: Request, res: Response, next: NextFunction
 }
 
 export default {
-    getProductByIDType,
+    getProductById,
     editProduct,
+    createProduct,
     getAllProducts,
     editProductRating
 }
