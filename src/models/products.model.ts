@@ -16,9 +16,9 @@ export default db.define('product', {
     price: DataTypes.NUMBER,
     discount: DataTypes.NUMBER,
     availability: DataTypes.NUMBER,
-    amount: DataTypes.NUMBER,
-    overall_rating: DataTypes.NUMBER,
-    amount_people_rate: DataTypes.NUMBER
+    stock: DataTypes.NUMBER,
+    acu_ratings: DataTypes.NUMBER,
+    cont_ratings: DataTypes.NUMBER
 }, {
     freezeTableName: true,
     timestamps: false

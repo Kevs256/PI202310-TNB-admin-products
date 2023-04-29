@@ -4,7 +4,7 @@ export default interface IProducts{
     price: number,
     discount: number,
     availability: number,
-    amount: number,
-    overall_rating: number,
-    amount_people_rate: number
+    stock: number,
+    acu_ratings: number,
+    cont_ratings: number
 }

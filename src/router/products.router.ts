@@ -11,15 +11,10 @@ class ProductsRouter {
     }
 
     private config(){
-        //get all
-        this.router.route('/').get(productsController.getAllProducts);
-        //get id
+        this.router.route('/').get(productsController.getProductsByPage);
+        this.router.route('/').post(productsController.createProduct);
         this.router.route('/:id_product').get(productsController.getProductById);
-        //edit-sino está que se cree
-        this.router.route('/:id_product').post(productsController.createProduct);
-        //edit-sino está que se cree
         this.router.route('/:id_product').put(productsController.editProduct);
-        //edit el rating
         this.router.route('/:id_product/rating').put(productsController.editProductRating);
     }
 }

@@ -1,6 +1,5 @@
 import Express, { Request, Response, NextFunction }  from "express";
 import productsModel from "../models/products.model";
-import { where } from "sequelize";
 
 const getProductById = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -19,12 +18,12 @@ const getProductById = async (req: Request, res: Response, next: NextFunction) =
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const { id_card, price, discount, availability, amount, type } = req.body;
+        const { id_card, price, discount, availability, stock, type } = req.body;
         
         const newProduct = await productsModel.create({
             id_product: id_card,
             price, discount, availability, 
-            amount, type, overall_rating: 0, amount_people_rate: 0
+            stock, type, acu_ratings: 0, cont_ratings: 0
         });
 
         return res.status(200).json({ success: true, data: newProduct });
@@ -37,14 +36,14 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
 const editProduct = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const { id_product } = req.params;
-        const { price, discount, availability, amount } = req.body;
+        const { price, discount, availability, stock } = req.body;
         
         const product = await productsModel.findByPk(id_product);
         if (product) {
-            product.price = price || product.save;
+            product.price = price || product.price;
             product.discount = discount || product.discount;
             product.availability = availability || product.availability;
-            product.amount = amount || product.amount;
+            product.stock = stock || product.stock;
             await product.save();
             return res.status(200).json({ success: true, data: product });
         }else{
@@ -56,9 +55,23 @@ const editProduct = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+const getProductsByPage = async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const products = await productsModel.findAll();
+        const {page} = req.query;
+        let _page:number = 1;
+        let _offset:number;
+        if(page && typeof(page) === 'string'){
+            if(/^\d+$/.test(page)){
+                _page = parseInt(page);
+            }else{
+                return res.status(401).json({ success: true, message: "Invalid page" });
+            }
+        }
+        _offset = _page * 6; 
+        const products = await productsModel.findAll({
+            limit: 6,
+            offset: _offset,
+        });
         return res.status(201).json({ success: true, data: products });
     }catch(err){
         console.log(err);
@@ -72,12 +85,8 @@ const editProductRating = async (req: Request, res: Response, next: NextFunction
         const { rating } = req.body;
         const product = await productsModel.findByPk(id_product);
         if (product) {
-            const oldRating = product.overall_rating;
-            const newRating = parseFloat(rating);
-            const amount_ratings = product.amount_people_rate + 1;
-            const overall_rating_prom = (oldRating + newRating) / amount_ratings;
-            product.overall_rating = overall_rating_prom;
-            product.amount_people_rate += 1;
+            product.acu_ratings += rating;
+            product.cont_ratings += 1;
             await product.save();
             return res.status(201).json({ success: true, data: product });
         }else{
@@ -92,6 +101,6 @@ export default {
     getProductById,
     editProduct,
     createProduct,
-    getAllProducts,
+    getProductsByPage,
     editProductRating
 }
