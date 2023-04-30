@@ -67,7 +67,7 @@ const getProductsByPage = async (req: Request, res: Response, next: NextFunction
                 return res.status(401).json({ success: true, message: "Invalid page" });
             }
         }
-        _offset = _page * 6; 
+        _offset = (_page - 1) * 6; 
         const products = await productsModel.findAll({
             limit: 6,
             offset: _offset,
