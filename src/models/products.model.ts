@@ -7,7 +7,7 @@ type ProductsModelStatic = typeof Model & {
   new (values?: object, options?: BuildOptions): ProductsInstance;
 };
 
-export default db.define('product', {
+export default db.define('products', {
     id_product: {
       primaryKey: true,
       type: DataTypes.STRING
