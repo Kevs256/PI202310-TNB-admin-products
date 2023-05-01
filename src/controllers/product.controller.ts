@@ -36,14 +36,13 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
 const editProduct = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const { id_product } = req.params;
-        const { price, discount, availability, stock } = req.body;
+        const { price, discount, availability } = req.body;
         
         const product = await productsModel.findByPk(id_product);
         if (product) {
             product.price = price || product.price;
             product.discount = discount || product.discount;
             product.availability = availability || product.availability;
-            product.stock = stock || product.stock;
             await product.save();
             return res.status(200).json({ success: true, data: product });
         }else{
@@ -97,10 +96,28 @@ const editProductRating = async (req: Request, res: Response, next: NextFunction
     }
 }
 
+const editStock = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id_product } = req.params;
+        const { stock } = req.body;
+        const product = await productsModel.findByPk(id_product);
+        if (product) {
+            product.stock += stock;
+            await product.save();
+            return res.status(201).json({ success: true, data: product });
+        }else{
+            return res.status(401).json({ success: false, message: "no se encontro el producto" });
+        }
+    } catch (error) {
+        return res.status(501).json({ success: false, message: "falla en el servidor" });
+    }
+}
+
 export default {
     getProductById,
     editProduct,
     createProduct,
     getProductsByPage,
-    editProductRating
+    editProductRating,
+    editStock
 }
