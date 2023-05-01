@@ -16,7 +16,7 @@ class ProductsRouter {
         this.router.route('/:id_product').get(productsController.getProductById);
         this.router.route('/:id_product').put(productsController.editProduct);
         this.router.route('/:id_product/rating').put(productsController.editProductRating);
-        this.router.route('/:id_product/stock').put(productsController.editProductRating);
+        this.router.route('/:id_product/stock').put(productsController.editProductStock);
     }
 }
 

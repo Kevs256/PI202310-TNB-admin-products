@@ -96,7 +96,7 @@ const editProductRating = async (req: Request, res: Response, next: NextFunction
     }
 }
 
-const editStock = async (req: Request, res: Response, next: NextFunction) => {
+const editProductStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id_product } = req.params;
         const { stock } = req.body;
@@ -119,5 +119,5 @@ export default {
     createProduct,
     getProductsByPage,
     editProductRating,
-    editStock
+    editProductStock
 }
