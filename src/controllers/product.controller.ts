@@ -71,7 +71,8 @@ const getProductsByPage = async (req: Request, res: Response, next: NextFunction
             limit: 6,
             offset: _offset,
         });
-        return res.status(201).json({ success: true, data: products });
+        const products_count = await productsModel.count();
+        return res.status(201).json({ success: true, data: {products, pages: Math.ceil(products_count/6)} });
     }catch(err){
         console.log(err);
         return res.status(500).json({ error: 'Error al obtener los productos' });
